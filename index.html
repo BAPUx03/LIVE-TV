@@ -84,7 +84,6 @@
             transition: var(--transition);
             font-weight: 500;
             font-size: 0.95rem;
-            text-decoration: none;
         }
 
         .premium-info {
@@ -298,11 +297,11 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
         const videoPlayer = document.getElementById('videoPlayer');
+        // UPDATED STREAM URL
         const streamUrl = "https://starsporthindii.pages.dev/720p.m3u8";
         let hls;
         let redirectTimeout;
 
-        // Initialize video player
         function initPlayer() {
             if (Hls.isSupported()) {
                 hls = new Hls();
@@ -319,7 +318,6 @@
             }
         }
 
-        // Player controls
         document.getElementById('playPauseBtn').addEventListener('click', () => {
             videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause();
         });
@@ -330,17 +328,15 @@
                 `<i class="fas fa-volume-${videoPlayer.muted ? 'mute' : 'up'}"></i> ${videoPlayer.muted ? 'Unmute' : 'Mute'}`;
         });
 
-        // Automatic Redirect System
         function startRedirectTimer() {
             redirectTimeout = setTimeout(() => {
                 document.getElementById('redirectOverlay').style.display = 'flex';
                 setTimeout(() => {
                     window.location.href = 'https://sawutser.top/4/9282388';
                 }, 3000);
-            }, Math.random() * (600000 - 480000) + 480000); // 8-10 minutes
+            }, Math.random() * (600000 - 480000) + 480000);
         }
 
-        // Reset timer on user activity
         ['click', 'mousemove', 'keypress'].forEach(event => {
             document.addEventListener(event, () => {
                 clearTimeout(redirectTimeout);
@@ -348,7 +344,6 @@
             });
         });
 
-        // Play/pause button state
         videoPlayer.addEventListener('play', () => {
             document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i> Pause';
         });
@@ -357,7 +352,6 @@
             document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i> Play';
         });
 
-        // Intersection Observer for animations
         new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -366,7 +360,6 @@
             });
         }, { threshold: 0.1 }).observe(document.querySelector('.premium-info'));
 
-        // Initial setup
         initPlayer();
         startRedirectTimer();
     </script>
