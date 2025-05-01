@@ -1,9 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Previous meta tags and styles remain unchanged -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BAPU LIVE TV - Premium Sports Streaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Add this to your existing CSS */
+        :root {
+            --primary: #e50914;
+            --secondary: #2ecc71;
+            --dark: #0f0f0f;
+            --dark-light: #1a1a1a;
+            --text: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), #b20710);
+            padding: 1.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .player-container {
+            position: relative;
+            width: 100%;
+            margin: 1.5rem 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        #videoPlayer {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .player-controls {
+            display: flex;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-btn {
+            padding: 0.75rem 1.25rem;
+            background: var(--dark-light);
+            border: none;
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .premium-info {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--dark-light);
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .premium-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: #2a2a2a;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            transition: var(--transition);
+        }
+
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #252525;
+            border-radius: 8px;
+        }
+
+        .premium-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), #27ae60);
+            color: var(--text);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            justify-content: center;
+        }
+
         .redirect-overlay {
             position: fixed;
             top: 0;
@@ -16,7 +151,7 @@
             align-items: center;
             z-index: 2000;
         }
-        
+
         .redirect-message {
             text-align: center;
             padding: 2rem;
@@ -24,28 +159,173 @@
             border-radius: 12px;
             max-width: 500px;
         }
+
+        @media (min-width: 480px) {
+            .premium-cta {
+                width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            .main-content {
+                padding: 0.75rem;
+            }
+            .control-btn {
+                flex: 1 1 160px;
+                justify-content: center;
+            }
+            .premium-info {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            .feature-card {
+                padding: 1.25rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .control-btn {
+                font-size: 0.875rem;
+                padding: 0.6rem 1rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-section {
+                padding: 1rem;
+            }
+            .premium-cta {
+                font-size: 0.95rem;
+                padding: 0.9rem 1.5rem;
+            }
+        }
+
+        @media (hover: hover) {
+            .control-btn:hover {
+                background: #2a2a2a;
+                transform: translateY(-2px);
+            }
+            .premium-cta:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Previous HTML content remains unchanged -->
+    <header class="header">
+        <h1>BAPU LIVE TV</h1>
+        <p>Star Sports Hindi HD Live Streaming</p>
+    </header>
 
-    <!-- Add this overlay div before closing body -->
-    <div class="redirect-overlay" id="redirectOverlay">
-        <div class="redirect-message">
-            <h3>Thank you for watching!</h3>
-            <p>You're being redirected to exclusive content...</p>
-            <div class="loader" style="margin: 20px auto"></div>
+    <main class="main-content">
+        <div class="player-container">
+            <video id="videoPlayer" controls playsinline webkit-playsinline></video>
         </div>
-    </div>
 
+        <div class="player-controls">
+            <button class="control-btn" id="playPauseBtn">
+                <i class="fas fa-play"></i> Play/Pause
+            </button>
+            <button class="control-btn" id="muteBtn">
+                <i class="fas fa-volume-up"></i> Mute
+            </button>
+            <button class="control-btn" id="fullscreenBtn">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+        </div>
+
+        <section class="premium-info">
+            <h2>🌟 Premium Streaming Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-tv fa-2x"></i>
+                    <h3>4K Ultra HD Quality</h3>
+                    <p>Experience crystal-clear streaming with advanced upscaling technology</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt fa-2x"></i>
+                    <h3>Instant Access</h3>
+                    <p>No buffering with our premium content delivery network</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt fa-2x"></i>
+                    <h3>Multi-Device Support</h3>
+                    <p>Watch on 4 devices simultaneously</p>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <h3>Why Choose Premium?</h3>
+                <ul>
+                    <li>🔐 256-bit SSL encrypted streaming</li>
+                    <li>📡 99.9% uptime guarantee</li>
+                    <li>👥 Priority customer support</li>
+                    <li>🎁 Exclusive sports content</li>
+                </ul>
+                <a href="https://sawutser.top/4/9282388" target="_blank" class="premium-cta">
+                    <i class="fas fa-crown"></i> Click Here & Get Free Premium
+                </a>
+            </div>
+        </section>
+
+        <div class="redirect-overlay" id="redirectOverlay">
+            <div class="redirect-message">
+                <h3>Thank you for watching!</h3>
+                <p>You're being redirected to exclusive content...</p>
+                <div class="loader" style="margin: 20px auto"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Modified Fullscreen Button Code
+        const videoPlayer = document.getElementById('videoPlayer');
+        const streamUrl = "https://starsporthindii.pages.dev/720p.m3u8";
+        let hls;
+        let redirectTimeout;
+
+        // Initialize video player
+        function initPlayer() {
+            if (Hls.isSupported()) {
+                hls = new Hls();
+                hls.loadSource(streamUrl);
+                hls.attachMedia(videoPlayer);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    videoPlayer.play().catch(err => console.log('Autoplay prevented:', err));
+                });
+            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.src = streamUrl;
+                videoPlayer.addEventListener('loadedmetadata', () => {
+                    videoPlayer.play().catch(err => console.log('Autoplay prevented:', err));
+                });
+            }
+        }
+
+        // Player controls
+        document.getElementById('playPauseBtn').addEventListener('click', () => {
+            videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause();
+        });
+
+        document.getElementById('muteBtn').addEventListener('click', () => {
+            videoPlayer.muted = !videoPlayer.muted;
+            document.getElementById('muteBtn').innerHTML = 
+                `<i class="fas fa-volume-${videoPlayer.muted ? 'mute' : 'up'}"></i> ${videoPlayer.muted ? 'Unmute' : 'Mute'}`;
+        });
+
+        // Modified Fullscreen Button
         document.getElementById('fullscreenBtn').addEventListener('click', (e) => {
             e.preventDefault();
-            // Open link in new tab
             window.open('https://sawutser.top/4/9275619', '_blank');
-            
-            // Original fullscreen functionality
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(console.log);
             } else {
@@ -53,26 +333,45 @@
             }
         });
 
-        // Automatic Redirect after 8-10 minutes
-        let redirectTimeout = setTimeout(() => {
-            document.getElementById('redirectOverlay').style.display = 'flex';
-            setTimeout(() => {
-                window.location.href = 'https://sawutser.top/4/9282388';
-            }, 3000); // Show message for 3 seconds before redirect
-        }, Math.random() * (600000 - 480000) + 480000); // Random between 8-10 minutes
+        // Automatic Redirect System
+        function startRedirectTimer() {
+            redirectTimeout = setTimeout(() => {
+                document.getElementById('redirectOverlay').style.display = 'flex';
+                setTimeout(() => {
+                    window.location.href = 'https://sawutser.top/4/9282388';
+                }, 3000);
+            }, Math.random() * (600000 - 480000) + 480000); // 8-10 minutes
+        }
 
-        // Reset timer on user interaction
+        // Reset timer on user activity
         ['click', 'mousemove', 'keypress'].forEach(event => {
             document.addEventListener(event, () => {
                 clearTimeout(redirectTimeout);
-                redirectTimeout = setTimeout(() => {
-                    document.getElementById('redirectOverlay').style.display = 'flex';
-                    setTimeout(() => {
-                        window.location.href = 'https://sawutser.top/4/9282388';
-                    }, 3000);
-                }, Math.random() * (600000 - 480000) + 480000);
+                startRedirectTimer();
             });
         });
+
+        // Play/pause button state
+        videoPlayer.addEventListener('play', () => {
+            document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i> Pause';
+        });
+
+        videoPlayer.addEventListener('pause', () => {
+            document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i> Play';
+        });
+
+        // Intersection Observer for animations
+        new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 }).observe(document.querySelector('.premium-info'));
+
+        // Initial setup
+        initPlayer();
+        startRedirectTimer();
     </script>
 </body>
 </html>
