@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BAPU LIVE TV v2.1 - Premium Streaming</title>
+    <title>BAPU LIVE TV - Premium Streaming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -42,6 +42,7 @@
         .player-container {
             position: relative;
             width: 95%;
+            max-width: 800px;
             margin: 1rem auto;
             background: #000;
             border-radius: 8px;
@@ -65,29 +66,37 @@
         }
 
         .ad-label {
-            position: absolute;
-            bottom: 5px;
-            left: 5px;
             color: #888;
             font-size: 0.7rem;
-            z-index: 100;
+            text-align: center;
+            margin: 5px 0;
         }
 
-        .ad-close {
+        .support-popup {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--dark-light);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1001;
+            max-width: 300px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .close-btn {
             position: absolute;
             top: 5px;
             right: 5px;
-            color: white;
             cursor: pointer;
-            z-index: 101;
-            background: rgba(0,0,0,0.5);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
+            color: #888;
         }
 
         .player-controls {
@@ -111,56 +120,9 @@
             transition: all 0.3s ease;
         }
 
-        .control-btn:hover {
-            background: #2a2a2a;
-        }
-
-        .telegram-float {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            background: var(--secondary);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            text-decoration: none;
-            font-size: 0.9rem;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .quality-selector {
-            background: var(--dark-light);
-            padding: 5px;
-            border-radius: 5px;
-            margin-left: 10px;
-            color: var(--text);
-        }
-
-        .loading-spinner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 2rem;
-            display: none;
-        }
-
-        .version-info {
-            text-align: center;
-            color: #666;
-            font-size: 0.8rem;
-            margin: 1rem;
-        }
-
         @media (max-width: 767px) {
             .desktop-ad { display: none; }
             .mobile-ad { display: block; }
-            .control-btn { padding: 8px 15px; }
         }
 
         @media (min-width: 768px) {
@@ -171,167 +133,79 @@
 </head>
 <body>
     <header class="header">
-        <h1>BAPU LIVE TV v2.1</h1>
+        <h1>BAPU LIVE TV</h1>
         <p>Star Sports Hindi Live Streaming</p>
     </header>
 
-    <!-- Top Ad Unit -->
+    <!-- Top Ad -->
     <div class="ad-container">
-        <div class="ad-close" onclick="handleAdClick()">×</div>
-        <span class="ad-label">Advertisement - Support Free Streaming</span>
+        <div class="ad-label">Advertisement</div>
         <div class="mobile-ad">
             <script type="text/javascript">
                 atOptions = { 'key' : 'fd768c903edf1ef98f6d6b1885f15e32', 'format' : 'iframe', 'height' : 250, 'width' : 300 };
             </script>
-            <script src="//www.highperformanceformat.com/fd768c903edf1ef98f6d6b1885f15e32/invoke.js"></script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/fd768c903edf1ef98f6d6b1885f15e32/invoke.js"></script>
         </div>
         <div class="desktop-ad">
             <script type="text/javascript">
                 atOptions = { 'key' : '885f32a29da9eabd51f6905c25d9c5a4', 'format' : 'iframe', 'height' : 90, 'width' : 728 };
             </script>
-            <script src="//www.highperformanceformat.com/885f32a29da9eabd51f6905c25d9c5a4/invoke.js"></script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/885f32a29da9eabd51f6905c25d9c5a4/invoke.js"></script>
         </div>
     </div>
 
     <!-- Video Player -->
     <div class="player-container">
-        <div class="loading-spinner" id="loadingSpinner"><i class="fas fa-spinner fa-spin"></i></div>
         <video id="videoPlayer" controls playsinline webkit-playsinline></video>
     </div>
 
-    <!-- Player Controls -->
-    <div class="player-controls">
-        <button class="control-btn" onclick="window.open('https://sawutser.top/4/9275619', '_blank')">
-            <i class="fas fa-hd"></i> Premium HD
-        </button>
-        
-        <button class="control-btn" id="muteBtn" onclick="toggleMute()">
-            <i class="fas fa-volume-up"></i> Mute
-        </button>
-        
-        <button class="control-btn" onclick="[toggleFullScreen(), window.open('https://sawutser.top/4/9275619', '_blank')]">
-            <i class="fas fa-expand"></i> Fullscreen
-        </button>
-        
-        <button class="control-btn" onclick="[toggleNightMode(), window.open('https://sawutser.top/4/9275619', '_blank')]">
-            <i class="fas fa-moon"></i> Night Mode
-        </button>
-        
-        <div class="control-btn">
-            <i class="fas fa-tachometer-alt"></i>
-            <select class="quality-selector" id="qualitySelect" onchange="[changeQuality(), window.open('https://sawutser.top/4/9275619', '_blank')]">
-                <option value="auto">Auto Quality</option>
-                <option value="720">720p HD</option>
-                <option value="480">480p</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Mid Ad Unit -->
+    <!-- Bottom Ad -->
     <div class="ad-container">
-        <div class="ad-close" onclick="handleAdClick()">×</div>
-        <span class="ad-label">Advertisement - Keep Us Running</span>
+        <div class="ad-label">Advertisement</div>
         <script type='text/javascript' src='//pl26518690.profitableratecpm.com/4b/ad/05/4bad05a8a471eb7163d4ece8ba7c9d70.js'></script>
     </div>
 
-    <!-- Bottom Ad Unit -->
-    <div class="ad-container">
-        <div class="ad-close" onclick="handleAdClick()">×</div>
-        <span class="ad-label">Advertisement - Thank You for Support</span>
-        <div class="mobile-ad">
-            <script type="text/javascript">
-                atOptions = { 'key' : 'fd768c903edf1ef98f6d6b1885f15e32', 'format' : 'iframe', 'height' : 250, 'width' : 300 };
-            </script>
-            <script src="//www.highperformanceformat.com/fd768c903edf1ef98f6d6b1885f15e32/invoke.js"></script>
-        </div>
-        <div class="desktop-ad">
-            <script type="text/javascript">
-                atOptions = { 'key' : '885f32a29da9eabd51f6905c25d9c5a4', 'format' : 'iframe', 'height' : 90, 'width' : 728 };
-            </script>
-            <script src="//www.highperformanceformat.com/885f32a29da9eabd51f6905c25d9c5a4/invoke.js"></script>
-        </div>
-    </div>
-
-    <a href="https://t.me/BAPU_EMPIRE" class="telegram-float" target="_blank" rel="noopener">
-        <i class="fab fa-telegram"></i>
-        Join Telegram
-    </a>
-
-    <div class="version-info">
-        Version 2.1 | Last Updated: 2023-12-20 | Optimized for Mobile & Desktop
+    <!-- Support Popup -->
+    <div class="support-popup" id="supportPopup">
+        <div class="close-btn" onclick="closeSupportPopup()">×</div>
+        <p>Enjoying our service? Please consider supporting us!</p>
+        <button class="control-btn" onclick="window.open('https://sawutser.top/4/9275619', '_blank')">
+            <i class="fas fa-hand-holding-heart"></i> Support Now
+        </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Video Configuration
+        // Initialize Player
         const videoPlayer = document.getElementById('videoPlayer');
         const streamUrl = "https://starsporthindii.pages.dev/720p.m3u8";
         let hls;
 
-        // Initialize Player
-        function initPlayer() {
-            if (Hls.isSupported()) {
-                hls = new Hls();
-                hls.loadSource(streamUrl);
-                hls.attachMedia(videoPlayer);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => videoPlayer.play());
-                
-                hls.on(Hls.Events.LEVEL_LOADED, () => {
-                    document.getElementById('loadingSpinner').style.display = 'none';
-                });
-            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-                videoPlayer.src = streamUrl;
-                videoPlayer.addEventListener('loadedmetadata', () => videoPlayer.play());
-            }
+        if (Hls.isSupported()) {
+            hls = new Hls();
+            hls.loadSource(streamUrl);
+            hls.attachMedia(videoPlayer);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => videoPlayer.play());
+        } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+            videoPlayer.src = streamUrl;
+            videoPlayer.addEventListener('loadedmetadata', () => videoPlayer.play());
         }
 
-        // Ad Click Handler
-        function handleAdClick() {
-            window.open('https://advertiser-site.com', '_blank');
+        // Support Popup
+        let popupTimer = setTimeout(() => {
+            document.getElementById('supportPopup').style.display = 'block';
+        }, 600000); // 10 minutes
+
+        function closeSupportPopup() {
+            document.getElementById('supportPopup').style.display = 'none';
+            clearTimeout(popupTimer);
         }
 
-        // Player Controls
-        function toggleMute() {
-            videoPlayer.muted = !videoPlayer.muted;
-            document.getElementById('muteBtn').innerHTML = 
-                `<i class="fas fa-volume-${videoPlayer.muted ? 'mute' : 'up'}"></i> ${videoPlayer.muted ? 'Unmute' : 'Mute'}`;
-        }
-
-        function toggleFullScreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
-        function toggleNightMode() {
-            document.body.style.filter = document.body.style.filter === 'invert(1)' ? 'none' : 'invert(1)';
-        }
-
-        function changeQuality() {
-            const quality = document.getElementById('qualitySelect').value;
-            if (hls) {
-                hls.currentLevel = quality === 'auto' ? -1 : hls.levels.findIndex(l => l.height === parseInt(quality));
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            initPlayer();
-            videoPlayer.addEventListener('waiting', () => {
-                document.getElementById('loadingSpinner').style.display = 'block';
-            });
-            videoPlayer.addEventListener('playing', () => {
-                document.getElementById('loadingSpinner').style.display = 'none';
-            });
-        });
-
-        // Orientation Handling
+        // Handle orientation changes
         window.addEventListener('orientationchange', () => {
             videoPlayer.style.height = 'auto';
             setTimeout(() => videoPlayer.play(), 300);
         });
     </script>
 </body>
-  </html>
+</html>
