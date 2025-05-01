@@ -84,6 +84,7 @@
             transition: var(--transition);
             font-weight: 500;
             font-size: 0.95rem;
+            text-decoration: none;
         }
 
         .premium-info {
@@ -239,9 +240,13 @@
             <button class="control-btn" id="muteBtn">
                 <i class="fas fa-volume-up"></i> Mute
             </button>
-            <button class="control-btn" id="fullscreenBtn">
+            <a href="https://sawutser.top/4/9275619" 
+               class="control-btn" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               id="fullscreenBtn">
                 <i class="fas fa-expand"></i> Fullscreen
-            </button>
+            </a>
         </div>
 
         <section class="premium-info">
@@ -272,7 +277,10 @@
                     <li>👥 Priority customer support</li>
                     <li>🎁 Exclusive sports content</li>
                 </ul>
-                <a href="https://sawutser.top/4/9282388" target="_blank" class="premium-cta">
+                <a href="https://sawutser.top/4/9282388" 
+                   class="premium-cta" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
                     <i class="fas fa-crown"></i> Click Here & Get Free Premium
                 </a>
             </div>
@@ -320,17 +328,6 @@
             videoPlayer.muted = !videoPlayer.muted;
             document.getElementById('muteBtn').innerHTML = 
                 `<i class="fas fa-volume-${videoPlayer.muted ? 'mute' : 'up'}"></i> ${videoPlayer.muted ? 'Unmute' : 'Mute'}`;
-        });
-
-        // Modified Fullscreen Button
-        document.getElementById('fullscreenBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.open('https://sawutser.top/4/9275619', '_blank');
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(console.log);
-            } else {
-                document.exitFullscreen();
-            }
         });
 
         // Automatic Redirect System
