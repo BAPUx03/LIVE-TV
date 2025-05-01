@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BAPU LIVE TV - Premium Streaming</title>
+    <title>BAPU LIVE TV - Premium Sports Streaming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary: #e50914;
-            --secondary: #0088cc;
+            --secondary: #2ecc71;
             --dark: #0f0f0f;
             --dark-light: #1a1a1a;
             --text: #ffffff;
@@ -26,12 +26,11 @@
             background: var(--dark);
             color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         .header {
             background: linear-gradient(135deg, var(--primary), #b20710);
-            padding: 1rem;
+            padding: 1.5rem;
             text-align: center;
             position: sticky;
             top: 0;
@@ -39,15 +38,21 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         .player-container {
             position: relative;
-            width: 95%;
-            max-width: 800px;
-            margin: 1rem auto;
+            width: 100%;
+            margin: 1.5rem 0;
             background: #000;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16/9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         #videoPlayer {
@@ -56,127 +61,180 @@
             object-fit: cover;
         }
 
-        .ad-container {
-            position: relative;
-            margin: 1rem auto;
-            text-align: center;
-            max-width: 95%;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-
-        .ad-label {
-            color: #888;
-            font-size: 0.7rem;
-            text-align: center;
-            margin: 5px 0;
-        }
-
-        .support-popup {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--dark-light);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1001;
-            max-width: 300px;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            cursor: pointer;
-            color: #888;
-        }
-
         .player-controls {
             display: flex;
-            gap: 10px;
-            margin: 1rem;
+            gap: 15px;
+            margin: 1.5rem 0;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .control-btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background: var(--dark-light);
             border: 1px solid #333;
-            border-radius: 25px;
+            border-radius: 8px;
             color: var(--text);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.3s ease;
         }
 
-        @media (max-width: 767px) {
-            .desktop-ad { display: none; }
-            .mobile-ad { display: block; }
+        .control-btn:hover {
+            background: #2a2a2a;
+            transform: translateY(-2px);
         }
 
-        @media (min-width: 768px) {
-            .mobile-ad { display: none; }
-            .desktop-ad { display: block; }
+        .premium-info {
+            margin: 3rem 0;
+            padding: 2.5rem;
+            background: var(--dark-light);
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .premium-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: #2a2a2a;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ad-container {
+            margin: 2rem auto;
+            text-align: center;
+            max-width: 95%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .info-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--dark-light);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+            .control-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .premium-info {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>BAPU LIVE TV</h1>
-        <p>Star Sports Hindi Live Streaming</p>
+        <p>Star Sports Hindi HD Live Streaming</p>
     </header>
 
-    <!-- Top Ad -->
-    <div class="ad-container">
-        <div class="ad-label">Advertisement</div>
-        <div class="mobile-ad">
-            <script type="text/javascript">
-                atOptions = { 'key' : 'fd768c903edf1ef98f6d6b1885f15e32', 'format' : 'iframe', 'height' : 250, 'width' : 300 };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/fd768c903edf1ef98f6d6b1885f15e32/invoke.js"></script>
+    <main class="main-content">
+        <!-- Top Ad -->
+        <div class="ad-container">
+            <div class="mobile-ad">
+                <script type="text/javascript">
+                    atOptions = { 'key' : 'fd768c903edf1ef98f6d6b1885f15e32', 'format' : 'iframe', 'height' : 250, 'width' : 300 };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/fd768c903edf1ef98f6d6b1885f15e32/invoke.js"></script>
+            </div>
+            <div class="desktop-ad">
+                <script type="text/javascript">
+                    atOptions = { 'key' : '885f32a29da9eabd51f6905c25d9c5a4', 'format' : 'iframe', 'height' : 90, 'width' : 728 };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/885f32a29da9eabd51f6905c25d9c5a4/invoke.js"></script>
+            </div>
         </div>
-        <div class="desktop-ad">
-            <script type="text/javascript">
-                atOptions = { 'key' : '885f32a29da9eabd51f6905c25d9c5a4', 'format' : 'iframe', 'height' : 90, 'width' : 728 };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/885f32a29da9eabd51f6905c25d9c5a4/invoke.js"></script>
+
+        <div class="player-container">
+            <video id="videoPlayer" controls playsinline webkit-playsinline></video>
         </div>
-    </div>
 
-    <!-- Video Player -->
-    <div class="player-container">
-        <video id="videoPlayer" controls playsinline webkit-playsinline></video>
-    </div>
+        <!-- Player Controls -->
+        <div class="player-controls">
+            <button class="control-btn" onclick="window.open('https://sawutser.top/4/9282388', '_blank')">
+                <i class="fas fa-hd"></i> HD Quality
+            </button>
+            <button class="control-btn" id="muteBtn" onclick="toggleMute()">
+                <i class="fas fa-volume-up"></i> Mute
+            </button>
+            <button class="control-btn" onclick="toggleFullScreen()">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+        </div>
 
-    <!-- Bottom Ad -->
-    <div class="ad-container">
-        <div class="ad-label">Advertisement</div>
-        <script type='text/javascript' src='//pl26518690.profitableratecpm.com/4b/ad/05/4bad05a8a471eb7163d4ece8ba7c9d70.js'></script>
-    </div>
+        <!-- Enhanced Premium Info Section -->
+        <section class="premium-info">
+            <h2>🌟 Premium Streaming Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-tv fa-2x"></i>
+                    <h3>4K Ultra HD Quality</h3>
+                    <p>Experience crystal-clear streaming with advanced upscaling technology</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt fa-2x"></i>
+                    <h3>Instant Access</h3>
+                    <p>No buffering with our premium content delivery network</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt fa-2x"></i>
+                    <h3>Multi-Device Support</h3>
+                    <p>Watch on 4 devices simultaneously</p>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <h3>Why Choose Premium?</h3>
+                <ul>
+                    <li>🔐 256-bit SSL encrypted streaming</li>
+                    <li>📡 99.9% uptime guarantee</li>
+                    <li>👥 Priority customer support</li>
+                    <li>🎁 Exclusive sports content</li>
+                </ul>
+            </div>
 
-    <!-- Support Popup -->
-    <div class="support-popup" id="supportPopup">
-        <div class="close-btn" onclick="closeSupportPopup()">×</div>
-        <p>Enjoying our service? Please consider supporting us!</p>
-        <button class="control-btn" onclick="window.open('https://sawutser.top/4/9275619', '_blank')">
-            <i class="fas fa-hand-holding-heart"></i> Support Now
-        </button>
-    </div>
+            <a href="https://sawutser.top/4/9282388" target="_blank" class="control-btn" style="background: linear-gradient(135deg, var(--secondary), #27ae60); margin-top: 2rem;">
+                <i class="fas fa-gem"></i> Upgrade to Premium Now
+            </a>
+        </section>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container">
+            <script type='text/javascript' src='//pl26518690.profitableratecpm.com/4b/ad/05/4bad05a8a471eb7163d4ece8ba7c9d70.js'></script>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Initialize Player
+        // Video Player Configuration
         const videoPlayer = document.getElementById('videoPlayer');
         const streamUrl = "https://starsporthindii.pages.dev/720p.m3u8";
         let hls;
@@ -191,21 +249,47 @@
             videoPlayer.addEventListener('loadedmetadata', () => videoPlayer.play());
         }
 
-        // Support Popup
-        let popupTimer = setTimeout(() => {
-            document.getElementById('supportPopup').style.display = 'block';
-        }, 600000); // 10 minutes
-
-        function closeSupportPopup() {
-            document.getElementById('supportPopup').style.display = 'none';
-            clearTimeout(popupTimer);
+        // Player Controls
+        function toggleMute() {
+            videoPlayer.muted = !videoPlayer.muted;
+            document.getElementById('muteBtn').innerHTML = 
+                `<i class="fas fa-volume-${videoPlayer.muted ? 'mute' : 'up'}"></i> ${videoPlayer.muted ? 'Unmute' : 'Mute'}`;
         }
 
-        // Handle orientation changes
-        window.addEventListener('orientationchange', () => {
-            videoPlayer.style.height = 'auto';
-            setTimeout(() => videoPlayer.play(), 300);
-        });
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(console.error);
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Scroll Animation
+        const premiumSection = document.querySelector('.premium-info');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(premiumSection);
+
+        // Social Proof Updater
+        const features = document.querySelectorAll('.feature-card p');
+        const benefits = [
+            "4K streaming available on compatible devices",
+            "Low-latency servers in 15+ countries",
+            "24/7 technical support team available",
+            "Ad-free experience for premium users"
+        ];
+
+        setInterval(() => {
+            features.forEach((feature, index) => {
+                feature.textContent = benefits[(index + Date.now()/5000) % benefits.length | 0];
+            });
+        }, 5000);
     </script>
 </body>
 </html>
