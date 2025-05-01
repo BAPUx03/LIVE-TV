@@ -20,5 +20,4 @@ A web-based TV streaming interface providing access to live channels. Built for 
 - JavaScript
 - GitHub Pages for hosting
 
-## 📂 Project Structure
-
+## TG : @BAPU_EMPIRE
